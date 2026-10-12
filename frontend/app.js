@@ -13,6 +13,7 @@ const state = {
   quizIndex: 0,
   quizLocked: false,
   quizCorrect: 0,
+  quizAnswers: [],
   view: "home",
 };
 
@@ -21,10 +22,16 @@ const categoryArt = { Vocabulary: ["✿", "mint"], Travel: ["↗", "peach"], Gra
 const byId = (id) => document.getElementById(id);
 
 async function api(path, options = {}) {
-  const response = await fetch(`/api${path}`, {
-    headers: { "Content-Type": "application/json", ...options.headers },
-    ...options,
-  });
+  let response;
+  try {
+    response = await fetch(`/api${path}`, {
+      ...options,
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json", ...options.headers },
+    });
+  } catch {
+    throw new Error("Motiva cannot reach its server. Open the app at http://127.0.0.1:8000 while FastAPI is running.");
+  }
   if (!response.ok) {
     const body = await response.json().catch(() => ({}));
     throw new Error(body.detail || "Something went wrong. Please try again.");
@@ -51,6 +58,9 @@ function showAuth(mode = state.authMode) {
   byId("auth-switch-line").innerHTML = mode === "login"
     ? 'New to Motiva? <button id="auth-switch" type="button">Create an account</button>'
     : 'Already have an account? <button id="auth-switch" type="button">Sign in</button>';
+  byId("auth-switch").addEventListener("click", () => {
+    showAuth(state.authMode === "login" ? "register" : "login");
+  });
   byId("auth-message").textContent = "";
 }
 
@@ -60,6 +70,7 @@ function showApp(user) {
   byId("app-shell").hidden = false;
   byId("profile-name").textContent = user.username;
   byId("profile-avatar").textContent = user.username.charAt(0).toUpperCase();
+  byId("top-avatar").textContent = user.username.charAt(0).toUpperCase();
 }
 
 function setView(view) {
@@ -90,20 +101,38 @@ function renderLessons() {
   byId("home-lessons").innerHTML = state.lessons.slice(0, 3).map(lessonCard).join("");
   byId("all-lessons").innerHTML = state.lessons.filter((lesson) => state.categoryFilter === "All" || lesson.category === state.categoryFilter).map(lessonCard).join("");
   byId("category-filters").innerHTML = categories.map((category) => `<button class="filter-chip ${category === state.categoryFilter ? "active" : ""}" data-filter="${category}">${category}</button>`).join("");
-  const day = new Date();
-  const yearStart = new Date(day.getFullYear(), 0, 0);
-  const dayNumber = Math.floor((day - yearStart) / 86400000);
-  const daily = state.lessons[dayNumber % state.lessons.length];
-  if (daily) {
-    byId("daily-title").textContent = daily.title;
-    byId("daily-description").textContent = daily.description;
-    byId("daily-card-count").textContent = `${daily.item_count} cards`;
-    byId("start-daily").dataset.lesson = daily.id;
+}
+
+function renderPersonalFocus(progress) {
+  const personalization = progress.personalization || {};
+  const focus = personalization.focus_lesson;
+  const lesson = state.lessons.find((item) => item.id === focus?.id) || state.lessons[0];
+  const completed = personalization.today_reviews || 0;
+  const target = personalization.daily_goal || 5;
+  const progressPercent = Math.min(100, Math.round((completed / target) * 100));
+  const username = (state.user?.username || "Learner").replace(/[_-]+/g, " ");
+  byId("welcome-title").textContent = `Welcome back, ${username}.`;
+  byId("welcome-subheading").textContent = progress.reviewed
+    ? (completed >= target ? "You have reached today's practice goal. Keep your rhythm going!" : `Your learning path is shaped by your answers. ${Math.max(0, target - completed)} more reviews to reach today's goal.`)
+    : "Your personal learning path is ready. Start with a short lesson picked for you.";
+  byId("daily-title").textContent = lesson ? lesson.title : "Your learning path starts here";
+  byId("daily-description").textContent = focus?.reason || lesson?.description || "Create a lesson and add your first learning cards.";
+  byId("daily-card-count").textContent = lesson ? `${lesson.item_count} cards · ${lesson.category}` : "Create your first lesson";
+  byId("daily-goal-label").textContent = `${completed} / ${target} reviews`;
+  byId("daily-goal-fill").style.width = `${progressPercent}%`;
+  const startButton = byId("start-daily");
+  if (lesson) {
+    startButton.dataset.lesson = lesson.id;
+    startButton.disabled = false;
+  } else {
+    delete startButton.dataset.lesson;
+    startButton.disabled = true;
   }
 }
 
 function renderProgress() {
   const progress = state.progress || { reviewed: 0, accuracy: 0, streak: 0, weekly: [] };
+  renderPersonalFocus(progress);
   byId("stat-reviewed").textContent = progress.reviewed;
   byId("stat-accuracy").textContent = progress.accuracy;
   byId("stat-streak").textContent = progress.streak;
@@ -200,9 +229,24 @@ async function startQuiz() {
     state.quizItems = lessonGroups.flatMap((lesson) => lesson.items).sort(() => Math.random() - 0.5).slice(0, 8);
     state.quizIndex = 0;
     state.quizCorrect = 0;
+    state.quizAnswers = [];
     state.quizLocked = false;
     renderQuizQuestion();
   } catch (error) { showToast(error.message); }
+}
+
+function gradeForPercent(percent) {
+  if (percent >= 90) return { letter: "A", label: "Excellent work! You really know this set." };
+  if (percent >= 80) return { letter: "B", label: "Great result! You are making strong progress." };
+  if (percent >= 70) return { letter: "C", label: "Good work. A little more practice will make it stick." };
+  if (percent >= 60) return { letter: "D", label: "You are getting there. Review the tricky answers and try again." };
+  return { letter: "F", label: "Keep going. Every missed answer is a chance to learn." };
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  })[character]);
 }
 
 function renderQuizQuestion() {
@@ -212,17 +256,26 @@ function renderQuizQuestion() {
     return;
   }
   if (state.quizIndex >= state.quizItems.length) {
-    const percent = Math.round((state.quizCorrect / state.quizItems.length) * 100);
-    root.innerHTML = `<p class="eyebrow">QUIZ COMPLETE</p><div class="quiz-question">${percent >= 70 ? "Lovely work! ✨" : "Good effort! 🌱"}</div><p class="quiz-prompt">You got ${state.quizCorrect} out of ${state.quizItems.length} correct.</p><button class="button button-primary" id="quiz-restart">Try again</button>`;
+    const total = state.quizItems.length;
+    const percent = Math.round((state.quizCorrect / total) * 100);
+    const grade = gradeForPercent(percent);
+    const missed = state.quizAnswers.filter((answer) => !answer.correct);
+    const review = missed.length
+      ? `<section class="quiz-review"><h3>Answers to review</h3>${missed.map((answer) => `<div class="quiz-review-row"><strong>${escapeHtml(answer.term)}</strong><span>Your answer: ${escapeHtml(answer.selected)}</span><b>Correct: ${escapeHtml(answer.translation)}</b></div>`).join("")}</section>`
+      : `<p class="quiz-perfect-note">Perfect score — you got every answer right! ✨</p>`;
+    root.innerHTML = `<div class="quiz-results"><p class="eyebrow">QUIZ COMPLETE</p><h2 class="quiz-question">Your result</h2><div class="quiz-grade-card"><div class="quiz-grade-letter">${grade.letter}</div><div class="quiz-grade-detail"><span>FINAL MARK</span><strong>${percent}%</strong><small>${state.quizCorrect} correct out of ${total}</small></div><div class="quiz-score-ring" style="--score:${percent}%"><span>${percent}<small>%</small></span></div></div><p class="quiz-grade-message">${grade.label}</p><div class="quiz-score-stats"><div><strong>${state.quizCorrect}</strong><span>Correct answers</span></div><div><strong>${total - state.quizCorrect}</strong><span>To review</span></div><div><strong>${total}</strong><span>Questions</span></div></div>${review}<button class="button button-primary" id="quiz-restart">Try another quiz</button></div>`;
     return;
   }
   const item = state.quizItems[state.quizIndex];
   const allItems = state.quizItems;
   const distractors = allItems.filter((candidate) => candidate.id !== item.id).sort(() => Math.random() - 0.5).slice(0, 3).map((candidate) => candidate.translation);
   const options = [...new Set([item.translation, ...distractors])].sort(() => Math.random() - 0.5);
-  root.innerHTML = `<p class="quiz-progress">QUESTION ${state.quizIndex + 1} <span>OF ${state.quizItems.length}</span></p><h2 class="quiz-question">${item.term}</h2><p class="quiz-prompt">Choose the correct translation</p><div class="quiz-options">${options.map((option) => `<button class="quiz-option" data-answer="${encodeURIComponent(option)}">${option}</button>`).join("")}</div><div class="quiz-feedback" id="quiz-feedback"></div><button class="button button-primary quiz-next" id="quiz-next" hidden>${state.quizIndex + 1 === state.quizItems.length ? "See results" : "Next question →"}</button>`;
+  const answered = state.quizAnswers.length;
+  const runningPercent = answered ? Math.round((state.quizCorrect / answered) * 100) : 0;
+  const runningGrade = answered ? gradeForPercent(runningPercent).letter : "—";
+  const progress = Math.round((state.quizIndex / state.quizItems.length) * 100);
+  root.innerHTML = `<div class="quiz-progress-header"><p class="quiz-progress">QUESTION ${state.quizIndex + 1} <span>OF ${state.quizItems.length}</span></p><span class="quiz-running-mark">Mark so far: ${answered ? `${runningPercent}% (${runningGrade})` : "—"}</span></div><div class="quiz-progress-track"><span style="width:${progress}%"></span></div><h2 class="quiz-question">${escapeHtml(item.term)}</h2><p class="quiz-prompt">Choose the correct translation</p><div class="quiz-options">${options.map((option) => `<button class="quiz-option" data-answer="${encodeURIComponent(option)}">${escapeHtml(option)}</button>`).join("")}</div><div class="quiz-feedback" id="quiz-feedback" aria-live="polite"></div><button class="button button-primary quiz-next" id="quiz-next" hidden>${state.quizIndex + 1 === state.quizItems.length ? "See your mark" : "Next question →"}</button>`;
 }
-
 async function refreshLearningData() {
   [state.lessons, state.progress] = await Promise.all([
     api(`/lessons?language=${encodeURIComponent(state.language)}`),
@@ -235,13 +288,14 @@ async function refreshLearningData() {
 
 async function createPersonalLesson(event) {
   event.preventDefault();
-  const values = Object.fromEntries(new FormData(event.currentTarget));
+  const form = event.currentTarget;
+  const values = Object.fromEntries(new FormData(form));
   try {
     const lesson = await api("/lessons", {
       method: "POST",
       body: JSON.stringify({ ...values, language: state.language }),
     });
-    event.currentTarget.reset();
+    form.reset();
     byId("create-lesson-form").hidden = true;
     await refreshLearningData();
     await openLesson(lesson.id);
@@ -252,13 +306,14 @@ async function createPersonalLesson(event) {
 async function createPersonalCard(event) {
   event.preventDefault();
   if (!state.selectedLesson) return;
-  const values = Object.fromEntries(new FormData(event.currentTarget));
+  const form = event.currentTarget;
+  const values = Object.fromEntries(new FormData(form));
   try {
     await api(`/lessons/${state.selectedLesson.id}/items`, {
       method: "POST",
       body: JSON.stringify(values),
     });
-    event.currentTarget.reset();
+    form.reset();
     byId("create-card-form").hidden = true;
     await openLesson(state.selectedLesson.id);
     await refreshLearningData();
@@ -289,13 +344,19 @@ async function submitAnswer(button) {
   const selected = decodeURIComponent(button.dataset.answer);
   const correct = selected === item.translation;
   if (correct) state.quizCorrect += 1;
+  state.quizAnswers.push({ term: item.term, translation: item.translation, selected, correct });
   document.querySelectorAll(".quiz-option").forEach((option) => {
     option.disabled = true;
     const answer = decodeURIComponent(option.dataset.answer);
     if (answer === item.translation) option.classList.add("correct");
     else if (option === button) option.classList.add("wrong");
   });
-  byId("quiz-feedback").textContent = correct ? "That's right — nicely done!" : `Not quite. The answer is “${item.translation}”.`;
+  const answered = state.quizAnswers.length;
+  const mark = Math.round((state.quizCorrect / answered) * 100);
+  const grade = gradeForPercent(mark).letter;
+  byId("quiz-feedback").textContent = correct
+    ? `Correct — +1 point. Your mark so far: ${mark}% (${grade}).`
+    : `The correct answer is “${item.translation}”. Your mark so far: ${mark}% (${grade}).`;
   byId("quiz-next").hidden = false;
   try {
     await api("/progress/reviews", { method: "POST", body: JSON.stringify({ item_id: item.id, correct }) });
@@ -313,12 +374,28 @@ function bindEvents() {
     if (selected) byId("course-flag").textContent = selected.flag;
     selectLanguage(event.target.value);
   });
-  byId("auth-switch").addEventListener("click", () => showAuth(state.authMode === "login" ? "register" : "login"));
   byId("auth-form").addEventListener("submit", async (event) => {
     event.preventDefault();
     const values = Object.fromEntries(new FormData(event.currentTarget));
+    values.username = String(values.username || "").trim();
+    const usernameInput = event.currentTarget.elements.username;
+    const passwordInput = event.currentTarget.elements.password;
+    const message = byId("auth-message");
+    if (!/^[A-Za-z0-9_]{3,24}$/.test(values.username)) {
+      message.textContent = "Username must be 3–24 characters and use only letters, numbers, or underscores.";
+      usernameInput.focus();
+      return;
+    }
+    if (String(values.password || "").length < 8) {
+      message.textContent = "Password must be at least 8 characters long.";
+      passwordInput.focus();
+      return;
+    }
     const endpoint = state.authMode === "login" ? "/auth/login" : "/auth/register";
-    byId("auth-submit").disabled = true;
+    const submitButton = byId("auth-submit");
+    const originalLabel = state.authMode === "login" ? "Sign in" : "Create account";
+    submitButton.disabled = true;
+    submitButton.textContent = state.authMode === "login" ? "Signing in…" : "Creating account…";
     byId("auth-message").textContent = "";
     try {
       const user = await api(endpoint, { method: "POST", body: JSON.stringify(values) });
@@ -326,10 +403,14 @@ function bindEvents() {
       await loadLearningApp();
     } catch (error) {
       byId("auth-message").textContent = error.message;
-    } finally { byId("auth-submit").disabled = false; }
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalLabel;
+    }
   });
   byId("account-logout").addEventListener("click", async () => {
-    try { await api("/auth/logout", { method: "POST" }); } finally { state.user = null; showAuth("login"); }
+    try { await api("/auth/logout", { method: "POST" }); }
+    finally { window.location.reload(); }
   });
   byId("open-create-lesson").addEventListener("click", () => { byId("create-lesson-form").hidden = false; });
   byId("close-create-lesson").addEventListener("click", () => { byId("create-lesson-form").hidden = true; });
@@ -359,18 +440,19 @@ function bindEvents() {
 
 async function loadLearningApp() {
   state.languages = await api("/languages");
-    const savedLanguage = localStorage.getItem("motiva-language");
-    state.language = state.languages.some((item) => item.code === savedLanguage) ? savedLanguage : "en";
-    byId("language-select").innerHTML = state.languages.map((item) => `<option value="${item.code}">${item.name}</option>`).join("");
-    byId("language-select").value = state.language;
-    const activeLanguage = state.languages.find((item) => item.code === state.language);
-    byId("course-flag").textContent = activeLanguage.flag;
+  const savedLanguage = localStorage.getItem("motiva-language");
+  state.language = state.languages.some((item) => item.code === savedLanguage) ? savedLanguage : "en";
+  byId("language-select").innerHTML = state.languages.map((item) => `<option value="${item.code}">${item.name}</option>`).join("");
+  byId("language-select").value = state.language;
+  const activeLanguage = state.languages.find((item) => item.code === state.language);
+  byId("course-flag").textContent = activeLanguage.flag;
   await refreshLearningData();
   await startQuiz();
 }
 
 async function initialize() {
   formatToday();
+  showAuth("login");
   bindEvents();
   try {
     const user = await api("/auth/me");

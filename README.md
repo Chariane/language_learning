@@ -1,15 +1,15 @@
 # Motiva — Language Learning App
 
-Motiva is a web app for learning English or Spanish with French translations. It includes themed lessons, flashcards, pronunciation guides, a quiz, and saved learning progress.
+Motiva is a web app for learning English or Spanish with French translations. Learners can study lessons, practise with flashcards, take quizzes, and follow progress saved to their own account.
 
 ## Requirements
 
 - Python 3.10 or newer
-- pip
+- `pip`
 
 ## Run the app
 
-From this folder, create and activate a virtual environment, then install the backend requirements:
+From the project root, create and activate a virtual environment, install the dependencies, and start FastAPI:
 
 ```bash
 python -m venv .venv
@@ -18,15 +18,31 @@ pip install -r backend/requirements.txt
 uvicorn backend.app.main:app --reload
 ```
 
-Open <http://127.0.0.1:8000> in Chrome. The FastAPI backend serves the web interface and its API. SQLite creates `data/motiva.db` automatically and keeps progress between launches.
+Open <http://127.0.0.1:8000> in Chrome. Keep the terminal running while you use the app. Open the FastAPI address rather than `frontend/index.html` directly so the API, styles, and JavaScript all load from the same server.
 
 ## Features
 
-- Choose English or Spanish as the language to learn
-- Lessons grouped by vocabulary, travel, and grammar
-- Flashcards with translations, IPA guides, spoken pronunciation, and examples
-- A multiple-choice quiz with immediate feedback
-- A dashboard with review count, accuracy, and recent progress
-- A FastAPI REST API backed by SQLite
+- Create an account and sign in with a username and password
+- Choose English or Spanish, with French translations
+- Study vocabulary, travel, and grammar lessons
+- Use flashcards with translations, pronunciation guides, spoken audio, and examples
+- Create private lessons and add your own cards
+- Take multiple-choice quizzes, see a live score, receive a final percentage and letter grade, and review missed answers
+- See review totals, accuracy, streaks, and weekly activity on the dashboard
+- Get a personal lesson recommendation based on your quiz answers and a daily goal of five reviews
 
-The sample course content covers beginner English and Spanish with French translations. Quiz progress is stored on the computer running the backend in SQLite. The app does not include user accounts or cloud synchronization.
+## Data and accounts
+
+FastAPI serves the frontend and provides the API. SQLite stores data in `data/motiva.db`. Accounts, private lessons, and quiz progress are kept between launches and separated by user. The daily recommendation uses the signed-in user's own quiz history; starter lessons are shared examples.
+
+Passwords are stored as PBKDF2 hashes, and login sessions use HttpOnly cookies. This project stores data on the computer running the backend; it does not include cloud hosting or account recovery. The cookie is configured for local development. For an HTTPS deployment, enable secure cookies and serve the app over HTTPS.
+
+## Project structure
+
+```text
+backend/app/main.py   FastAPI routes, authentication, and SQLite access
+frontend/index.html   Web app structure
+frontend/styles.css   App styles
+frontend/app.js       Frontend behavior
+data/motiva.db       SQLite database, created automatically
+```

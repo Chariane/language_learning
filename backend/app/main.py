@@ -274,6 +274,11 @@ class CardInput(BaseModel):
     example_translation: str = Field(min_length=1, max_length=220)
 
 
+class ReviewSubmission(BaseModel):
+    item_id: int = Field(gt=0)
+    correct: bool
+
+
 @app.on_event("startup")
 def on_startup() -> None:
     initialize_database()
@@ -404,6 +409,19 @@ def get_progress(language: str = "en", user: dict = Depends(get_current_user)) -
             WHERE r.user_id = ? AND l.language = ?""",
             (user["id"], language),
         ).fetchone()
+        today = date.today().isoformat()
+        focus_rows = db.execute(
+            """SELECT l.id, l.title, l.description, l.category,
+            COUNT(DISTINCT i.id) AS item_count, COUNT(r.id) AS reviews,
+            COALESCE(SUM(r.is_correct), 0) AS correct,
+            COALESCE(SUM(CASE WHEN date(r.reviewed_at) = ? THEN 1 ELSE 0 END), 0) AS today_reviews
+            FROM lessons l
+            LEFT JOIN lesson_items i ON i.lesson_id = l.id
+            LEFT JOIN review_events r ON r.item_id = i.id AND r.user_id = ?
+            WHERE l.language = ? AND (l.owner_id IS NULL OR l.owner_id = ?)
+            GROUP BY l.id ORDER BY l.owner_id IS NOT NULL, l.rowid""",
+            (today, user["id"], language, user["id"]),
+        ).fetchall()
         rows = db.execute(
             """SELECT date(r.reviewed_at) AS day, COUNT(*) AS total,
             SUM(r.is_correct) AS correct FROM review_events r
@@ -423,12 +441,45 @@ def get_progress(language: str = "en", user: dict = Depends(get_current_user)) -
             streak += 1
             cursor -= timedelta(days=1)
         reviewed, correct = summary["reviewed"], summary["correct"]
+        focus_options = [dict(row) for row in focus_rows]
+        practiced = [lesson for lesson in focus_options if lesson["reviews"]]
+        lessons_with_mistakes = [lesson for lesson in practiced if lesson["reviews"] > lesson["correct"]]
+        if lessons_with_mistakes:
+            focus = min(
+                lessons_with_mistakes,
+                key=lambda lesson: (
+                    lesson["correct"] / lesson["reviews"],
+                    -(lesson["reviews"] - lesson["correct"]),
+                ),
+            )
+            focus_reason = "Picked from your past answers: this lesson could use a little more practice."
+        elif focus_options:
+            focus = min(
+                focus_options,
+                key=lambda lesson: (lesson["reviews"] / max(lesson["item_count"], 1), lesson["reviews"]),
+            )
+            focus_reason = "Chosen for your next step based on the lessons you have practised so far."
+        else:
+            focus = None
+            focus_reason = "Create a lesson to start your personal learning path."
+        personalization = {
+            "daily_goal": 5,
+            "today_reviews": sum(lesson["today_reviews"] for lesson in focus_options),
+            "focus_lesson": ({
+                "id": focus["id"],
+                "title": focus["title"],
+                "category": focus["category"],
+                "item_count": focus["item_count"],
+                "reason": focus_reason,
+            } if focus else None),
+        }
         return {
             "reviewed": reviewed,
             "correct": correct,
             "accuracy": round((correct / reviewed) * 100) if reviewed else 0,
             "streak": streak,
             "weekly": recent,
+            "personalization": personalization,
         }
 
 
@@ -452,6 +503,16 @@ def save_review(review: ReviewSubmission, user: dict = Depends(get_current_user)
 @app.get("/")
 def home() -> FileResponse:
     return FileResponse(FRONTEND_DIR / "index.html")
+
+
+@app.get("/styles.css")
+def frontend_styles() -> FileResponse:
+    return FileResponse(FRONTEND_DIR / "styles.css", media_type="text/css")
+
+
+@app.get("/app.js")
+def frontend_script() -> FileResponse:
+    return FileResponse(FRONTEND_DIR / "app.js", media_type="application/javascript")
 
 
 app.mount("/assets", StaticFiles(directory=FRONTEND_DIR), name="assets")
