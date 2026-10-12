@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f8f4" />
+    <title>Motiva — Learn a little every day</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <section class="auth-screen" id="auth-screen">
+      <div class="auth-story">
+        <a class="brand auth-brand" href="#home"><span class="brand-mark">m</span><span>motiva<span class="brand-dot">.</span></span></a>
+        <div class="auth-story-copy"><p class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</p><h1>Learn a little.<br />Go a long way<span class="title-period">.</span></h1><p>Build a language habit that belongs to you. Your lessons and progress stay with your account.</p><div class="auth-word-art"><span>hola</span><span>hello</span><span>bonjour</span><i>✳</i></div></div>
+        <p class="auth-footnote">One word at a time <span>✳</span></p>
+      </div>
+      <div class="auth-panel"><div class="auth-form-wrap"><p class="eyebrow accent-eyebrow" id="auth-kicker">WELCOME BACK</p><h2 id="auth-title">Sign in to Motiva</h2><p class="auth-subtitle" id="auth-subtitle">Pick up where your learning left off.</p><form id="auth-form"><label>Username<input name="username" autocomplete="username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" required placeholder="e.g. nadege_learns" /></label><label>Password<input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters" /></label><button class="button button-primary auth-submit" id="auth-submit" type="submit">Sign in</button><p class="auth-message" id="auth-message" role="alert"></p></form><p class="auth-switch" id="auth-switch-line">New to Motiva? <button id="auth-switch" type="button">Create an account</button></p><p class="auth-security">Your personal learning history is saved to your account.</p></div></div>
+    </section>
+    <div class="app-shell" id="app-shell" hidden>
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#home" aria-label="Motiva home">
+          <span class="brand-mark">m</span><span>motiva<span class="brand-dot">.</span></span>
+        </a>
+        <div class="course-switcher">
+          <div class="course-flag" id="course-flag">🇬🇧</div>
+          <div class="course-choice"><span class="eyebrow">LEARNING</span><select id="language-select" aria-label="Choose a language"></select></div>
+          <span class="chevron" aria-hidden="true">⌄</span>
+        </div>
+        <p class="nav-label">MENU</p>
+        <nav class="main-nav" aria-label="Main navigation">
+          <button class="nav-link active" data-view="home"><span class="nav-icon">⌂</span>Overview</button>
+          <button class="nav-link" data-view="lessons"><span class="nav-icon">▤</span>My lessons</button>
+          <button class="nav-link" data-view="practice"><span class="nav-icon">✳</span>Practice quiz</button>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="streak-card"><span class="streak-flame">✦</span><div><strong id="sidebar-streak">0 day streak</strong><small>Keep your rhythm going</small></div></div>
+          <div class="profile"><div class="avatar" id="profile-avatar">M</div><div class="profile-copy"><strong id="profile-name">Learner</strong><small>Personal account</small></div><button class="profile-more" id="account-logout" type="button" title="Sign out">↪</button></div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <button class="mobile-menu" id="menu-toggle" aria-label="Open menu">☰</button>
+          <div class="breadcrumb">My learning <span>/</span> <strong id="breadcrumb-current">Overview</strong></div>
+          <div class="topbar-right"><span class="today-label" id="today-label"></span><div class="top-avatar">N</div></div>
+        </header>
+
+        <section class="view active" id="view-home">
+          <div class="welcome-row"><div><p class="eyebrow accent-eyebrow">A SMALL STEP TODAY</p><h1>A little progress<br class="mobile-break" /> adds up<span class="title-period">.</span></h1><p class="subheading">A few minutes today can take you somewhere new.</p></div><div class="welcome-illustration" aria-hidden="true"><div class="sun-shape"></div><div class="book-shape">A<br /><span>文</span></div><div class="sparkle sparkle-one">✳</div><div class="sparkle sparkle-two">✦</div></div></div>
+
+          <div class="daily-card">
+            <div class="daily-content"><div class="daily-kicker"><span class="live-dot"></span> YOUR DAILY LESSON</div><p class="daily-date" id="daily-date"></p><h2 id="daily-title">Loading your lesson…</h2><p id="daily-description" class="daily-description"></p><div class="daily-meta"><span>◷ 5 min</span><span>✳ Beginner</span><span id="daily-card-count">5 cards</span></div><button class="button button-light" id="start-daily">Start learning <span>→</span></button></div>
+            <div class="daily-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="word-bubble bubble-back">bonjour</div><div class="word-bubble bubble-front"><span>hello</span><small>/həˈləʊ/</small></div><div class="art-star">✳</div></div>
+          </div>
+
+          <div class="section-heading stats-heading"><div><p class="eyebrow">YOUR JOURNEY</p><h2>Learning at a glance</h2></div><span class="period-chip">All time <span>⌄</span></span></div>
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-top"><span class="stat-icon icon-mint">▤</span><span class="stat-trend">↗ Keep it up</span></div><strong id="stat-reviewed">0</strong><span class="stat-label">Cards reviewed</span><div class="stat-decoration mint-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+            <article class="stat-card"><div class="stat-top"><span class="stat-icon icon-peach">◎</span><span class="stat-trend">Your average</span></div><strong><span id="stat-accuracy">0</span><small>%</small></strong><span class="stat-label">Quiz accuracy</span><div class="accuracy-track"><span id="accuracy-fill"></span></div></article>
+            <article class="stat-card"><div class="stat-top"><span class="stat-icon icon-lilac">✦</span><span class="stat-trend">Best is yet to come</span></div><strong><span id="stat-streak">0</span><small> days</small></strong><span class="stat-label">Current streak</span><div class="streak-dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+          </div>
+
+          <div class="section-heading category-heading"><div><p class="eyebrow">PICK UP WHERE YOU LEFT OFF</p><h2>Explore your lessons</h2></div><button class="text-button" data-go="lessons">All lessons <span>→</span></button></div>
+          <div class="lesson-grid" id="home-lessons"></div>
+          <div class="weekly-card"><div class="weekly-heading"><div><p class="eyebrow">CONSISTENCY IS KEY</p><h2>Your activity this week</h2></div><div class="week-total"><strong id="week-total">0</strong><span>reviews</span></div></div><div class="weekly-chart" id="weekly-chart" aria-label="Reviews over the last seven days"></div></div>
+        </section>
+
+        <section class="view" id="view-lessons">
+          <div class="page-heading"><p class="eyebrow accent-eyebrow">BUILD YOUR VOCABULARY</p><h1>My lessons<span class="title-period">.</span></h1><p class="subheading">Small, focused lessons. Words that stay with you.</p></div>
+          <div class="lesson-toolbar"><div class="filter-row" id="category-filters"></div><button class="button button-primary" id="open-create-lesson" type="button">＋ Create a lesson</button></div>
+          <form class="personal-form lesson-create-form" id="create-lesson-form" hidden>
+            <div class="form-heading"><strong>Create your own lesson</strong><button class="text-button" id="close-create-lesson" type="button">Cancel</button></div>
+            <div class="form-grid"><label>Lesson title<input name="title" maxlength="80" required placeholder="e.g. At the café" /></label><label>Category<select name="category"><option>Vocabulary</option><option>Travel</option><option>Grammar</option></select></label></div>
+            <label>Short description<input name="description" maxlength="180" required placeholder="What do you want to practise?" /></label>
+            <button class="button button-primary" type="submit">Save lesson</button>
+          </form>
+          <div class="lesson-grid lesson-grid-large" id="all-lessons"></div>
+          <div class="flashcard-section" id="flashcard-section" hidden>
+            <div class="section-heading"><div><p class="eyebrow">FLASHCARD PRACTICE</p><h2 id="flashcard-lesson-title">Lesson</h2></div><button class="text-button" id="close-flashcards">← All lessons</button></div>
+            <form class="personal-form card-create-form" id="create-card-form" hidden>
+              <div class="form-heading"><strong>Add a word or phrase</strong><button class="text-button" id="close-create-card" type="button">Cancel</button></div>
+              <div class="form-grid"><label>Word or phrase<input name="term" maxlength="160" required /></label><label>Translation<input name="translation" maxlength="160" required /></label><label>Pronunciation (IPA)<input name="pronunciation" maxlength="100" required placeholder="/ˈwɜːd/" /></label></div>
+              <div class="form-grid"><label>Example sentence<input name="example" maxlength="220" required /></label><label>Example translation<input name="example_translation" maxlength="220" required /></label></div>
+              <button class="button button-primary" type="submit">Add card</button>
+            </form>
+            <div class="personal-lesson-actions" id="personal-lesson-actions" hidden><span>Your private lesson</span><button class="button button-primary" id="open-create-card" type="button">＋ Add a card</button></div>
+            <div class="flashcard-wrap"><p class="card-counter" id="card-counter">CARD 1 OF 5</p><button class="flashcard" id="flashcard" aria-label="Reveal translation"><span class="flashcard-top"><span id="flashcard-category">VOCABULARY</span><span class="flip-hint">↻ Tap to reveal</span></span><span class="flash-term" id="flash-term"></span><span class="pronunciation" id="flash-pronunciation"></span><button class="pronounce-button" id="pronounce-word" type="button">▶ Listen</button><span class="flash-divider"></span><span class="flash-answer" id="flash-answer" hidden></span><span class="flash-example" id="flash-example" hidden></span></button><div class="card-controls"><button class="round-control" id="card-prev" aria-label="Previous card">←</button><button class="button button-primary" id="card-reveal">Show translation</button><button class="round-control" id="card-next" aria-label="Next card">→</button></div></div>
+          </div>
+        </section>
+
+        <section class="view" id="view-practice">
+          <div class="page-heading"><p class="eyebrow accent-eyebrow">A QUICK CHECK-IN</p><h1>Practice quiz<span class="title-period">.</span></h1><p class="subheading">Choose the right translation and make it stick.</p></div>
+          <div class="quiz-layout"><aside class="quiz-sidebar"><p class="eyebrow">QUIZ SETTINGS</p><h3>Choose a category</h3><div id="quiz-categories" class="quiz-category-list"></div><div class="quiz-tip"><span>✦</span><p><strong>Learning tip</strong><br />Say each answer out loud. Speaking helps you remember.</p></div></aside><div class="quiz-main" id="quiz-main"></div></div>
+        </section>
+        <footer class="footer-note">Made for curious minds <span>✳</span> One word at a time.</footer>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="/assets/app.js" defer></script>
+  </body>
+</html>
