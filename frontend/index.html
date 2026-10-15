@@ -8,7 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css?v=4" />
+    <script>
+      const savedTheme = localStorage.getItem("motiva-theme");
+      document.documentElement.dataset.theme = savedTheme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    </script>
+    <link rel="stylesheet" href="./styles.css?v=10" />
   </head>
   <body>
     <section class="auth-screen" id="auth-screen">
@@ -17,7 +21,7 @@
         <div class="auth-story-copy"><p class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</p><h1>Learn a little.<br />Go a long way<span class="title-period">.</span></h1><p>Build a language habit that belongs to you. Your lessons and progress stay with your account.</p><div class="auth-word-art"><span>hola</span><span>hello</span><span>bonjour</span><i>✳</i></div></div>
         <p class="auth-footnote">One word at a time <span>✳</span></p>
       </div>
-      <div class="auth-panel"><div class="auth-form-wrap"><p class="eyebrow accent-eyebrow" id="auth-kicker">WELCOME BACK</p><h2 id="auth-title">Sign in to Motiva</h2><p class="auth-subtitle" id="auth-subtitle">Pick up where your learning left off.</p><form id="auth-form" novalidate><label>Username<input name="username" autocomplete="username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" required placeholder="e.g. nadege_learns" /></label><label>Password<input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters" /></label><button class="button button-primary auth-submit" id="auth-submit" type="submit">Sign in</button><p class="auth-message" id="auth-message" role="alert"></p></form><p class="auth-switch" id="auth-switch-line">New to Motiva? <button id="auth-switch" type="button">Create an account</button></p><p class="auth-security">Your personal learning history is saved to your account.</p></div></div>
+      <div class="auth-panel"><button class="theme-toggle auth-theme-toggle" id="theme-toggle-auth" type="button" aria-label="Switch to dark mode"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Dark mode</span></button><div class="auth-form-wrap"><p class="eyebrow accent-eyebrow" id="auth-kicker">WELCOME BACK</p><h2 id="auth-title">Sign in to Motiva</h2><p class="auth-subtitle" id="auth-subtitle">Pick up where your learning left off.</p><form id="auth-form" novalidate><label>Username<input name="username" autocomplete="username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" required placeholder="e.g. nadege_learns" /></label><label>Password<input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters" /></label><button class="button button-primary auth-submit" id="auth-submit" type="submit">Sign in</button><p class="auth-message" id="auth-message" role="alert"></p></form><p class="auth-switch" id="auth-switch-line">New to Motiva? <button id="auth-switch" type="button">Create an account</button></p><p class="auth-security">Your personal learning history is saved to your account.</p></div></div>
     </section>
     <div class="app-shell" id="app-shell" hidden>
       <aside class="sidebar" id="sidebar">
@@ -32,12 +36,13 @@
         <p class="nav-label">MENU</p>
         <nav class="main-nav" aria-label="Main navigation">
           <button class="nav-link active" data-view="home"><span class="nav-icon">⌂</span>Overview</button>
-          <button class="nav-link" data-view="lessons"><span class="nav-icon">▤</span>My lessons</button>
+          <button class="nav-link" data-view="lessons"><span class="nav-icon">▤</span>Lessons</button>
           <button class="nav-link" data-view="practice"><span class="nav-icon">✳</span>Practice quiz</button>
+          <button class="nav-link" data-view="admin" id="admin-nav" hidden><span class="nav-icon">⚙</span>Admin studio</button>
         </nav>
         <div class="sidebar-bottom">
           <div class="streak-card"><span class="streak-flame">✦</span><div><strong id="sidebar-streak">0 day streak</strong><small>Keep your rhythm going</small></div></div>
-          <div class="profile"><div class="avatar" id="profile-avatar">M</div><div class="profile-copy"><strong id="profile-name">Learner</strong><small>Personal account</small></div><button class="profile-more" id="account-logout" type="button" title="Sign out">↪</button></div>
+          <div class="profile"><button class="profile-photo-button" id="profile-edit" type="button" title="Edit profile photo" aria-label="Edit profile photo"><span class="avatar" id="profile-avatar">M</span><span class="photo-edit-mark">＋</span></button><div class="profile-copy"><strong id="profile-name">Learner</strong><small>Personal account</small></div><button class="profile-more" id="account-logout" type="button" title="Sign out">↪</button></div>
         </div>
       </aside>
 
@@ -45,7 +50,7 @@
         <header class="topbar">
           <button class="mobile-menu" id="menu-toggle" aria-label="Open menu">☰</button>
           <div class="breadcrumb">My learning <span>/</span> <strong id="breadcrumb-current">Overview</strong></div>
-          <div class="topbar-right"><span class="today-label" id="today-label"></span><div class="top-avatar" id="top-avatar">M</div></div>
+          <div class="topbar-right"><span class="today-label" id="today-label"></span><button class="theme-toggle" id="theme-toggle-app" type="button" aria-label="Switch to dark mode"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Dark mode</span></button><div class="top-avatar" id="top-avatar">M</div></div>
         </header>
 
         <section class="view active" id="view-home">
@@ -60,45 +65,119 @@
           <div class="stats-grid">
             <article class="stat-card"><div class="stat-top"><span class="stat-icon icon-mint">▤</span><span class="stat-trend">↗ Keep it up</span></div><strong id="stat-reviewed">0</strong><span class="stat-label">Cards reviewed</span><div class="stat-decoration mint-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
             <article class="stat-card"><div class="stat-top"><span class="stat-icon icon-peach">◎</span><span class="stat-trend">Your average</span></div><strong><span id="stat-accuracy">0</span><small>%</small></strong><span class="stat-label">Quiz accuracy</span><div class="accuracy-track"><span id="accuracy-fill"></span></div></article>
-            <article class="stat-card"><div class="stat-top"><span class="stat-icon icon-lilac">✦</span><span class="stat-trend">Best is yet to come</span></div><strong><span id="stat-streak">0</span><small> days</small></strong><span class="stat-label">Current streak</span><div class="streak-dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+            <article class="stat-card"><div class="stat-top"><span class="stat-icon icon-lilac">✦</span><span class="stat-trend">Best is yet to come</span></div><strong><span id="stat-streak">0</span><small id="stat-streak-unit">days</small></strong><span class="stat-label">Current streak</span><small class="streak-status" id="streak-status">Study a card or answer a quiz to begin.</small><div class="streak-dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
           </div>
 
           <div class="section-heading category-heading"><div><p class="eyebrow">PICK UP WHERE YOU LEFT OFF</p><h2>Explore your lessons</h2></div><button class="text-button" data-go="lessons">All lessons <span>→</span></button></div>
           <div class="lesson-grid" id="home-lessons"></div>
-          <div class="weekly-card"><div class="weekly-heading"><div><p class="eyebrow">CONSISTENCY IS KEY</p><h2>Your activity this week</h2></div><div class="week-total"><strong id="week-total">0</strong><span>reviews</span></div></div><div class="weekly-chart" id="weekly-chart" aria-label="Reviews over the last seven days"></div></div>
+          <section class="weekly-card"><div class="weekly-heading"><div><p class="eyebrow">CONSISTENCY IS KEY</p><h2>Your activity this week</h2></div><div class="week-navigation"><button class="week-nav-button" id="week-previous" type="button" aria-label="Previous week" title="Previous week">←</button><strong id="week-label"></strong><button class="week-nav-button" id="week-next" type="button" aria-label="Next week" title="Next week">→</button></div><div class="week-total"><strong id="week-total">0</strong><span>learning actions</span></div></div><div class="weekly-chart" id="weekly-chart" aria-label="Learning activity from Monday to Sunday"></div><div class="weekly-quiz-panel"><div class="weekly-quiz-heading"><div><p class="eyebrow">QUIZ PERFORMANCE</p><h3>Your results this week</h3><small id="quiz-week-count">0 completed quizzes</small></div><div class="weekly-quiz-average"><strong id="quiz-week-average">—</strong><span>weekly average</span></div></div><p class="quiz-week-empty" id="quiz-week-empty" hidden>Complete a quiz to start building your weekly results.</p><div class="weekly-chart quiz-weekly-chart" id="quiz-weekly-chart" aria-label="Average completed quiz score for each day from Monday to Sunday"></div><p class="weekly-quiz-note">Each bar shows the average score of quizzes completed that day.</p></div></section>
         </section>
 
         <section class="view" id="view-lessons">
-          <div class="page-heading"><p class="eyebrow accent-eyebrow">BUILD YOUR VOCABULARY</p><h1>My lessons<span class="title-period">.</span></h1><p class="subheading">Small, focused lessons. Words that stay with you.</p></div>
-          <div class="lesson-toolbar"><div class="filter-row" id="category-filters"></div><button class="button button-primary" id="open-create-lesson" type="button">＋ Create a lesson</button></div>
-          <form class="personal-form lesson-create-form" id="create-lesson-form" hidden>
-            <div class="form-heading"><strong>Create your own lesson</strong><button class="text-button" id="close-create-lesson" type="button">Cancel</button></div>
-            <div class="form-grid"><label>Lesson title<input name="title" maxlength="80" required placeholder="e.g. At the café" /></label><label>Category<select name="category"><option>Vocabulary</option><option>Travel</option><option>Grammar</option></select></label></div>
-            <label>Short description<input name="description" maxlength="180" required placeholder="What do you want to practise?" /></label>
-            <button class="button button-primary" type="submit">Save lesson</button>
-          </form>
-          <div class="lesson-grid lesson-grid-large" id="all-lessons"></div>
+          <div class="page-heading"><p class="eyebrow accent-eyebrow">BUILD YOUR VOCABULARY</p><h1>Course library<span class="title-period">.</span></h1><p class="subheading">Administrator-curated lessons, ready for you to study.</p></div>
+          <div class="lesson-filters"><div><span class="filter-label">Category</span><div class="filter-row" id="category-filters"></div></div><div><span class="filter-label">Difficulty</span><div class="filter-row" id="level-filters"></div></div></div>
+          <div class="course-level-groups" id="all-lessons"></div>
           <div class="flashcard-section" id="flashcard-section" hidden>
-            <div class="section-heading"><div><p class="eyebrow">FLASHCARD PRACTICE</p><h2 id="flashcard-lesson-title">Lesson</h2></div><button class="text-button" id="close-flashcards">← All lessons</button></div>
-            <form class="personal-form card-create-form" id="create-card-form" hidden>
-              <div class="form-heading"><strong>Add a word or phrase</strong><button class="text-button" id="close-create-card" type="button">Cancel</button></div>
-              <div class="form-grid"><label>Word or phrase<input name="term" maxlength="160" required /></label><label>Translation<input name="translation" maxlength="160" required /></label><label>Pronunciation (IPA)<input name="pronunciation" maxlength="100" required placeholder="/ˈwɜːd/" /></label></div>
-              <div class="form-grid"><label>Example sentence<input name="example" maxlength="220" required /></label><label>Example translation<input name="example_translation" maxlength="220" required /></label></div>
-              <button class="button button-primary" type="submit">Add card</button>
-            </form>
-            <div class="personal-lesson-actions" id="personal-lesson-actions" hidden><span>Your private lesson</span><button class="button button-primary" id="open-create-card" type="button">＋ Add a card</button></div>
-            <div class="flashcard-wrap"><p class="card-counter" id="card-counter">CARD 1 OF 5</p><button class="flashcard" id="flashcard" aria-label="Reveal translation"><span class="flashcard-top"><span id="flashcard-category">VOCABULARY</span><span class="flip-hint">↻ Tap to reveal</span></span><span class="flash-term" id="flash-term"></span><span class="pronunciation" id="flash-pronunciation"></span><button class="pronounce-button" id="pronounce-word" type="button">▶ Listen</button><span class="flash-divider"></span><span class="flash-answer" id="flash-answer" hidden></span><span class="flash-example" id="flash-example" hidden></span></button><div class="card-controls"><button class="round-control" id="card-prev" aria-label="Previous card">←</button><button class="button button-primary" id="card-reveal">Show translation</button><button class="round-control" id="card-next" aria-label="Next card">→</button></div></div>
+            <div class="section-heading"><div><p class="eyebrow">FLASHCARD PRACTICE</p><h2 id="flashcard-lesson-title">Lesson</h2><p class="course-progress-detail" id="course-progress-detail"></p></div><div class="course-actions"><button class="button button-primary" id="practice-current-lesson" type="button">Quiz this course →</button><button class="text-button" id="close-flashcards">← All courses</button></div></div>
+            <div class="flashcard-wrap"><p class="card-counter" id="card-counter">CARD 1 OF 5</p><button class="flashcard" id="flashcard" aria-label="Reveal translation"><span class="flashcard-top"><span id="flashcard-category">VOCABULARY</span><span class="flip-hint">↻ Tap to reveal</span></span><span class="flash-term" id="flash-term"></span><span class="pronunciation" id="flash-pronunciation"></span><span class="flash-divider"></span><span class="flash-answer" id="flash-answer" hidden></span><span class="flash-example" id="flash-example" hidden></span></button><button class="pronounce-button" id="pronounce-word" type="button">▶ Listen</button><div class="card-review-actions" id="card-review-actions" hidden><span id="card-review-prompt">How did that feel?</span><div><button class="review-rating review-needs-work" type="button" data-card-review="0">Need more practice</button><button class="review-rating review-got-it" type="button" data-card-review="1">I know this</button></div><small id="card-review-message" aria-live="polite"></small></div><div class="card-controls"><button class="round-control" id="card-prev" aria-label="Previous card">←</button><button class="button button-primary" id="card-reveal">Show translation</button><button class="round-control" id="card-next" aria-label="Next card">→</button></div></div>
           </div>
         </section>
 
         <section class="view" id="view-practice">
           <div class="page-heading"><p class="eyebrow accent-eyebrow">A QUICK CHECK-IN</p><h1>Practice quiz<span class="title-period">.</span></h1><p class="subheading">Choose the right translation and make it stick.</p></div>
-          <div class="quiz-layout"><aside class="quiz-sidebar"><p class="eyebrow">QUIZ SETTINGS</p><h3>Choose a category</h3><div id="quiz-categories" class="quiz-category-list"></div><div class="quiz-tip"><span>✦</span><p><strong>Learning tip</strong><br />Say each answer out loud. Speaking helps you remember.</p></div></aside><div class="quiz-main" id="quiz-main"></div></div>
+          <div class="quiz-layout"><aside class="quiz-sidebar"><p class="eyebrow">QUIZ SETTINGS</p><h3>Choose a category</h3><div id="quiz-categories" class="quiz-category-list"></div><label class="quiz-level-label" for="quiz-level">Difficulty</label><select class="quiz-level-select" id="quiz-level"><option value="All">All levels</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select><div class="quiz-tip"><span>✦</span><p><strong>Learning tip</strong><br />Say each answer out loud. Speaking helps you remember.</p></div></aside><div class="quiz-main" id="quiz-main"></div></div>
+        </section>
+
+        <section class="view" id="view-admin">
+          <div class="page-heading"><p class="eyebrow accent-eyebrow">CONTENT CONTROL</p><h1>Admin studio<span class="title-period">.</span></h1><p class="subheading">Manage the shared lessons, flashcards, and quiz question bank.</p></div>
+          <div class="admin-stats" id="admin-stats">
+            <article><span>Shared lessons</span><strong id="admin-stat-lessons">0</strong></article>
+            <article><span>Learning cards</span><strong id="admin-stat-cards">0</strong></article>
+            <article><span>Quiz questions</span><strong id="admin-stat-questions">0</strong></article>
+            <article><span>Answers submitted</span><strong id="admin-stat-attempts">0</strong></article>
+          </div>
+          <section class="learner-monitor">
+            <div class="admin-section-heading"><div><p class="eyebrow">LEARNING ACTIVITY</p><h2>Learner progress</h2><p class="learner-monitor-note">A course is counted as studied when a learner rates its flashcards or answers its quiz questions.</p></div></div>
+            <div class="learner-monitor-layout"><div class="admin-learner-list" id="admin-learner-list"></div><div class="admin-learner-detail" id="admin-learner-detail"><div class="admin-empty"><span>✦</span><h2>Select a learner</h2><p>Review course activity, flashcard coverage, and quiz accuracy.</p></div></div></div>
+          </section>
+          <div class="admin-layout">
+            <aside class="admin-library">
+              <div class="admin-section-heading"><div><p class="eyebrow">CURRICULUM</p><h2>Shared lessons</h2></div></div>
+              <form class="personal-form admin-create-form" id="admin-create-lesson-form">
+                <strong class="admin-form-title">Create a lesson</strong>
+                <label>Lesson title<input name="title" required maxlength="80" placeholder="e.g. At the restaurant" /></label>
+                <div class="form-grid">
+                  <label>Language<select name="language"><option value="en">English → French</option><option value="es">Spanish → French</option></select></label>
+                  <label>Category<select name="category"><option>Vocabulary</option><option>Travel</option><option>Grammar</option></select></label>
+                </div>
+                <label>Level<select name="level"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label>
+                <label>Description<input name="description" required maxlength="180" placeholder="What will learners practise?" /></label>
+                <button class="button button-primary" type="submit">＋ Save lesson</button>
+              </form>
+              <div class="admin-lesson-list" id="admin-lesson-list"></div>
+            </aside>
+            <div class="admin-workspace">
+              <div class="admin-empty" id="admin-empty"><span>✦</span><h2>Choose a lesson to manage</h2><p>Pick one on the left or create a new lesson.</p></div>
+              <div id="admin-editor" hidden>
+                <form class="personal-form admin-edit-form" id="admin-edit-lesson-form">
+                  <input type="hidden" name="id" />
+                  <div class="form-heading"><div><p class="eyebrow">LESSON DETAILS</p><strong id="admin-edit-title">Edit shared lesson</strong></div><button class="button button-danger" id="admin-delete-lesson" type="button">Delete lesson</button></div>
+                  <div class="form-grid">
+                    <label>Title<input name="title" required maxlength="80" /></label>
+                    <label>Level<select name="level"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label>
+                  </div>
+                  <div class="form-grid">
+                    <label>Language<select name="language"><option value="en">English → French</option><option value="es">Spanish → French</option></select></label>
+                    <label>Category<select name="category"><option>Vocabulary</option><option>Travel</option><option>Grammar</option></select></label>
+                  </div>
+                  <label>Description<input name="description" required maxlength="180" /></label>
+                  <button class="button button-primary" type="submit">Save changes</button>
+                </form>
+                <div class="admin-content-grid">
+                  <section class="admin-content-panel">
+                    <div class="admin-section-heading"><div><p class="eyebrow">FLASHCARDS</p><h2>Learning cards</h2></div></div>
+                    <form class="personal-form admin-subform" id="admin-card-form">
+                      <input type="hidden" name="id" />
+                      <div class="form-grid"><label>Word or phrase<input name="term" required maxlength="160" /></label><label>French translation<input name="translation" required maxlength="160" /></label></div>
+                      <label>Pronunciation (IPA)<input name="pronunciation" required maxlength="100" placeholder="/ˈwɜːd/" /></label>
+                      <div class="form-grid"><label>Example sentence<input name="example" required maxlength="220" /></label><label>Example translation<input name="example_translation" required maxlength="220" /></label></div>
+                      <div class="admin-form-actions"><button class="button button-primary" type="submit" id="admin-card-submit">＋ Add card</button><button class="text-button" id="admin-card-cancel" type="button" hidden>Cancel edit</button></div>
+                    </form>
+                    <div class="admin-record-list" id="admin-card-list"></div>
+                  </section>
+                  <section class="admin-content-panel">
+                    <div class="admin-section-heading"><div><p class="eyebrow">QUESTION BANK</p><h2>Quiz questions</h2></div></div>
+                    <form class="personal-form admin-subform" id="admin-quiz-form">
+                      <input type="hidden" name="id" />
+                      <label>Question prompt<textarea name="prompt" required maxlength="240" rows="2" placeholder="Which phrase means…?"></textarea></label>
+                      <div class="form-grid"><label>Choice A<input name="choice_a" required maxlength="180" /></label><label>Choice B<input name="choice_b" required maxlength="180" /></label></div>
+                      <div class="form-grid"><label>Choice C<input name="choice_c" required maxlength="180" /></label><label>Choice D<input name="choice_d" required maxlength="180" /></label></div>
+                      <div class="form-grid"><label>Correct answer<select name="correct_answer" required><option value="">Choose the correct choice</option></select></label><label>Level<select name="level"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label></div>
+                      <label>Explanation shown after answering<textarea name="explanation" required maxlength="500" rows="2" placeholder="Explain the answer and give an example."></textarea></label>
+                      <div class="admin-form-actions"><button class="button button-primary" type="submit" id="admin-quiz-submit">＋ Add question</button><button class="text-button" id="admin-quiz-cancel" type="button" hidden>Cancel edit</button></div>
+                    </form>
+                    <div class="admin-record-list" id="admin-question-list"></div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
         <footer class="footer-note">Made for curious minds <span>✳</span> One word at a time.</footer>
       </main>
     </div>
+    <dialog class="profile-dialog" id="profile-dialog" aria-labelledby="profile-dialog-title">
+      <form class="profile-dialog-content" id="profile-form">
+        <div class="form-heading"><div><p class="eyebrow">YOUR ACCOUNT</p><strong id="profile-dialog-title">Profile photo</strong></div><button class="dialog-close" id="profile-dialog-close" type="button" aria-label="Close">×</button></div>
+        <div class="profile-photo-preview" id="profile-photo-preview">M</div>
+        <p class="profile-photo-help">Choose a photo from your device. PNG, JPEG, or WebP · max 2 MB.</p>
+        <input class="visually-hidden" id="profile-photo-file" type="file" accept="image/png,image/jpeg,image/webp" />
+        <button class="button button-secondary" id="choose-profile-photo" type="button">Choose photo</button>
+        <p class="profile-photo-error" id="profile-photo-error" role="alert"></p>
+        <div class="profile-dialog-actions"><button class="text-button" id="remove-profile-photo" type="button">Remove photo</button><button class="button button-primary" id="save-profile-photo" type="submit" disabled>Save photo</button></div>
+      </form>
+    </dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="./app.js?v=7" defer></script>
+    <script src="./app.js?v=13" defer></script>
   </body>
 </html>

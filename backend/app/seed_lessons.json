@@ -1,0 +1,746 @@
+[
+  {
+    "id": "everyday-words",
+    "language": "en",
+    "title": "Everyday words",
+    "category": "Vocabulary",
+    "level": "Beginner",
+    "description": "Useful words for daily conversations.",
+    "accent": "mint",
+    "items": [
+      [
+        "good morning",
+        "bonjour",
+        "/ɡʊd ˈmɔːrnɪŋ/",
+        "Good morning, Emma!",
+        "Bonjour, Emma !"
+      ],
+      [
+        "thank you",
+        "merci",
+        "/θæŋk juː/",
+        "Thank you for your help.",
+        "Merci pour ton aide."
+      ],
+      [
+        "please",
+        "s’il vous plaît",
+        "/pliːz/",
+        "A glass of water, please.",
+        "Un verre d’eau, s’il vous plaît."
+      ],
+      [
+        "today",
+        "aujourd’hui",
+        "/təˈdeɪ/",
+        "Today is a good day.",
+        "Aujourd’hui est une belle journée."
+      ],
+      [
+        "friend",
+        "ami(e)",
+        "/frend/",
+        "She is my best friend.",
+        "Elle est ma meilleure amie."
+      ]
+    ]
+  },
+  {
+    "id": "travel-essentials",
+    "language": "en",
+    "title": "Travel essentials",
+    "category": "Travel",
+    "level": "Beginner",
+    "description": "Find your way and feel at home abroad.",
+    "accent": "peach",
+    "items": [
+      [
+        "Where is the station?",
+        "Où est la gare ?",
+        "/wer ɪz ðə ˈsteɪʃən/",
+        "Excuse me, where is the station?",
+        "Excusez-moi, où est la gare ?"
+      ],
+      [
+        "a ticket",
+        "un billet",
+        "/ə ˈtɪkɪt/",
+        "I need a ticket to London.",
+        "J’ai besoin d’un billet pour Londres."
+      ],
+      [
+        "left",
+        "à gauche",
+        "/left/",
+        "Turn left at the next street.",
+        "Tournez à gauche à la prochaine rue."
+      ],
+      [
+        "How much is it?",
+        "Combien ça coûte ?",
+        "/haʊ mʌtʃ ɪz ɪt/",
+        "How much is it, please?",
+        "Combien ça coûte, s’il vous plaît ?"
+      ],
+      [
+        "I need help",
+        "J’ai besoin d’aide",
+        "/aɪ niːd help/",
+        "I need help with my bag.",
+        "J’ai besoin d’aide avec mon sac."
+      ]
+    ]
+  },
+  {
+    "id": "grammar-basics",
+    "language": "en",
+    "title": "Grammar basics",
+    "category": "Grammar",
+    "level": "Beginner",
+    "description": "Build simple sentences with confidence.",
+    "accent": "lilac",
+    "items": [
+      [
+        "I am learning",
+        "J’apprends",
+        "/aɪ æm ˈlɜːrnɪŋ/",
+        "I am learning English.",
+        "J’apprends l’anglais."
+      ],
+      [
+        "I would like…",
+        "Je voudrais…",
+        "/aɪ wʊd laɪk/",
+        "I would like a coffee.",
+        "Je voudrais un café."
+      ],
+      [
+        "Do you speak French?",
+        "Parlez-vous français ?",
+        "/duː juː spiːk frentʃ/",
+        "Do you speak French or English?",
+        "Parlez-vous français ou anglais ?"
+      ],
+      [
+        "I have",
+        "J’ai",
+        "/aɪ hæv/",
+        "I have a question.",
+        "J’ai une question."
+      ],
+      [
+        "Can you help me?",
+        "Pouvez-vous m’aider ?",
+        "/kæn juː help miː/",
+        "Can you help me, please?",
+        "Pouvez-vous m’aider, s’il vous plaît ?"
+      ]
+    ]
+  },
+  {
+    "id": "es-everyday-words",
+    "language": "es",
+    "title": "Palabras de cada día",
+    "category": "Vocabulary",
+    "level": "Beginner",
+    "description": "Vocabulaire essentiel pour les conversations du quotidien.",
+    "accent": "mint",
+    "items": [
+      [
+        "hola",
+        "bonjour / salut",
+        "/ˈo.la/",
+        "Hola, ¿cómo estás?",
+        "Salut, comment vas-tu ?"
+      ],
+      [
+        "gracias",
+        "merci",
+        "/ˈɡɾa.sjas/",
+        "Muchas gracias por tu ayuda.",
+        "Merci beaucoup pour ton aide."
+      ],
+      [
+        "por favor",
+        "s’il vous plaît",
+        "/poɾ faˈβoɾ/",
+        "Un café, por favor.",
+        "Un café, s’il vous plaît."
+      ],
+      [
+        "hoy",
+        "aujourd’hui",
+        "/oi/",
+        "Hoy hace buen tiempo.",
+        "Il fait beau aujourd’hui."
+      ],
+      [
+        "amigo / amiga",
+        "ami / amie",
+        "/aˈmi.ɣo/",
+        "Ella es mi mejor amiga.",
+        "Elle est ma meilleure amie."
+      ]
+    ]
+  },
+  {
+    "id": "es-travel-essentials",
+    "language": "es",
+    "title": "Viajar con confianza",
+    "category": "Travel",
+    "level": "Beginner",
+    "description": "Les phrases utiles pour se déplacer et demander de l’aide.",
+    "accent": "peach",
+    "items": [
+      [
+        "¿Dónde está la estación?",
+        "Où est la gare ?",
+        "/ˈdon.de esˈta la es.taˈsjon/",
+        "Perdón, ¿dónde está la estación?",
+        "Excusez-moi, où est la gare ?"
+      ],
+      [
+        "un billete",
+        "un billet",
+        "/un biˈʝe.te/",
+        "Necesito un billete para Madrid.",
+        "J’ai besoin d’un billet pour Madrid."
+      ],
+      [
+        "a la izquierda",
+        "à gauche",
+        "/a la isˈkjeɾ.ða/",
+        "Gira a la izquierda aquí.",
+        "Tourne à gauche ici."
+      ],
+      [
+        "¿Cuánto cuesta?",
+        "Combien ça coûte ?",
+        "/ˈkwan.to ˈkwes.ta/",
+        "¿Cuánto cuesta, por favor?",
+        "Combien ça coûte, s’il vous plaît ?"
+      ],
+      [
+        "Necesito ayuda",
+        "J’ai besoin d’aide",
+        "/ne.seˈsi.to aˈʝu.ða/",
+        "Necesito ayuda con mi maleta.",
+        "J’ai besoin d’aide avec ma valise."
+      ]
+    ]
+  },
+  {
+    "id": "es-grammar-basics",
+    "language": "es",
+    "title": "Gramática esencial",
+    "category": "Grammar",
+    "level": "Beginner",
+    "description": "Construire ses premières phrases en espagnol.",
+    "accent": "lilac",
+    "items": [
+      [
+        "Estoy aprendiendo",
+        "J’apprends",
+        "/esˈtoj a.pɾenˈdjen.do/",
+        "Estoy aprendiendo español.",
+        "J’apprends l’espagnol."
+      ],
+      [
+        "Quisiera…",
+        "Je voudrais…",
+        "/kiˈsje.ɾa/",
+        "Quisiera un café.",
+        "Je voudrais un café."
+      ],
+      [
+        "¿Hablas francés?",
+        "Parles-tu français ?",
+        "/ˈa.βlas fɾanˈses/",
+        "¿Hablas francés o inglés?",
+        "Parles-tu français ou anglais ?"
+      ],
+      [
+        "Tengo",
+        "J’ai",
+        "/ˈteŋ.ɡo/",
+        "Tengo una pregunta.",
+        "J’ai une question."
+      ],
+      [
+        "¿Puedes ayudarme?",
+        "Peux-tu m’aider ?",
+        "/ˈpwe.ðes a.ʝuˈðaɾ.me/",
+        "¿Puedes ayudarme, por favor?",
+        "Peux-tu m’aider, s’il te plaît ?"
+      ]
+    ]
+  },
+  {
+    "id": "en-vocabulary-intermediate",
+    "language": "en",
+    "title": "Beyond the basics",
+    "category": "Vocabulary",
+    "level": "Intermediate",
+    "description": "Build a broader vocabulary for work and everyday conversation",
+    "accent": "mint",
+    "items": [
+      [
+        "reliable",
+        "fiable",
+        "/rɪˈlaɪəbəl/",
+        "She is a reliable colleague.",
+        "C’est une collègue fiable."
+      ],
+      [
+        "to improve",
+        "améliorer",
+        "/ɪmˈpruːv/",
+        "I want to improve my writing.",
+        "Je veux améliorer mon écriture."
+      ],
+      [
+        "to realize",
+        "se rendre compte",
+        "/ˈriːəlaɪz/",
+        "I realized I had the wrong address.",
+        "Je me suis rendu compte que j’avais la mauvaise adresse."
+      ],
+      [
+        "outcome",
+        "résultat",
+        "/ˈaʊtkʌm/",
+        "The outcome was better than expected.",
+        "Le résultat était meilleur que prévu."
+      ]
+    ]
+  },
+  {
+    "id": "en-travel-intermediate",
+    "language": "en",
+    "title": "Travel with confidence",
+    "category": "Travel",
+    "level": "Intermediate",
+    "description": "Handle common changes and details during a trip",
+    "accent": "peach",
+    "items": [
+      [
+        "boarding pass",
+        "carte d’embarquement",
+        "/ˈbɔːrdɪŋ pæs/",
+        "Please have your boarding pass ready.",
+        "Veuillez préparer votre carte d’embarquement."
+      ],
+      [
+        "connecting flight",
+        "vol de correspondance",
+        "/kəˈnektɪŋ flaɪt/",
+        "I have a connecting flight in Paris.",
+        "J’ai un vol de correspondance à Paris."
+      ],
+      [
+        "delayed",
+        "retardé",
+        "/dɪˈleɪd/",
+        "Our train has been delayed by an hour.",
+        "Notre train a une heure de retard."
+      ],
+      [
+        "luggage allowance",
+        "franchise de bagages",
+        "/ˈlʌɡɪdʒ əˌlaʊəns/",
+        "What is the luggage allowance?",
+        "Quelle est la franchise de bagages ?"
+      ]
+    ]
+  },
+  {
+    "id": "en-grammar-intermediate",
+    "language": "en",
+    "title": "Grammar in conversation",
+    "category": "Grammar",
+    "level": "Intermediate",
+    "description": "Use common structures to connect ideas and describe experience",
+    "accent": "lilac",
+    "items": [
+      [
+        "although",
+        "bien que / même si",
+        "/ɔːlˈðoʊ/",
+        "Although it was late, we kept studying.",
+        "Même s’il était tard, nous avons continué à étudier."
+      ],
+      [
+        "unless",
+        "à moins que",
+        "/ənˈles/",
+        "You will miss the bus unless you hurry.",
+        "Tu vas manquer le bus à moins de te dépêcher."
+      ],
+      [
+        "used to",
+        "avoir l’habitude de (passé)",
+        "/ˈjuːst tuː/",
+        "I used to live near the sea.",
+        "J’habitais près de la mer autrefois."
+      ],
+      [
+        "have been working",
+        "travailler depuis (durée)",
+        "/hæv bɪn ˈwɜːrkɪŋ/",
+        "She has been working here for two years.",
+        "Elle travaille ici depuis deux ans."
+      ]
+    ]
+  },
+  {
+    "id": "en-vocabulary-advanced",
+    "language": "en",
+    "title": "Precise expression",
+    "category": "Vocabulary",
+    "level": "Advanced",
+    "description": "Learn nuanced words for precise and fluent expression",
+    "accent": "mint",
+    "items": [
+      [
+        "feasible",
+        "réalisable",
+        "/ˈfiːzəbəl/",
+        "The plan is feasible with more time.",
+        "Le plan est réalisable avec plus de temps."
+      ],
+      [
+        "subtle",
+        "subtil",
+        "/ˈsʌtəl/",
+        "There is a subtle difference in meaning.",
+        "Il y a une différence subtile de sens."
+      ],
+      [
+        "to overcome",
+        "surmonter",
+        "/ˌoʊvərˈkʌm/",
+        "They overcame several technical problems.",
+        "Ils ont surmonté plusieurs problèmes techniques."
+      ],
+      [
+        "insight",
+        "perspicacité / aperçu",
+        "/ˈɪnsaɪt/",
+        "Her report gives useful insight into the issue.",
+        "Son rapport apporte un éclairage utile sur le problème."
+      ]
+    ]
+  },
+  {
+    "id": "en-travel-advanced",
+    "language": "en",
+    "title": "Independent travel",
+    "category": "Travel",
+    "level": "Advanced",
+    "description": "Understand detailed travel arrangements and formal requests",
+    "accent": "peach",
+    "items": [
+      [
+        "itinerary",
+        "itinéraire détaillé",
+        "/aɪˈtɪnəreri/",
+        "The updated itinerary is in your inbox.",
+        "L’itinéraire détaillé mis à jour est dans votre boîte mail."
+      ],
+      [
+        "accommodation",
+        "hébergement",
+        "/əˌkɑːməˈdeɪʃən/",
+        "We booked accommodation near the old town.",
+        "Nous avons réservé un hébergement près de la vieille ville."
+      ],
+      [
+        "customs declaration",
+        "déclaration en douane",
+        "/ˈkʌstəmz ˌdekləˈreɪʃən/",
+        "Complete a customs declaration before landing.",
+        "Remplissez une déclaration en douane avant l’atterrissage."
+      ],
+      [
+        "to enquire",
+        "se renseigner",
+        "/ɪnˈkwaɪər/",
+        "I am writing to enquire about the tour.",
+        "Je vous écris pour me renseigner sur la visite."
+      ]
+    ]
+  },
+  {
+    "id": "en-grammar-advanced",
+    "language": "en",
+    "title": "Advanced sentence craft",
+    "category": "Grammar",
+    "level": "Advanced",
+    "description": "Practise emphasis, conditionals, and complex sentence patterns",
+    "accent": "lilac",
+    "items": [
+      [
+        "Had I known…",
+        "Si j’avais su…",
+        "/hæd aɪ noʊn/",
+        "Had I known about the delay, I would have left later.",
+        "Si j’avais su pour le retard, je serais parti plus tard."
+      ],
+      [
+        "Not only… but also…",
+        "Non seulement… mais aussi…",
+        "/nɑːt ˈoʊnli/",
+        "Not only did she call, but she also sent an email.",
+        "Non seulement elle a appelé, mais elle a aussi envoyé un courriel."
+      ],
+      [
+        "whereas",
+        "tandis que",
+        "/werˈæz/",
+        "The first option is cheaper, whereas the second is faster.",
+        "La première option est moins chère, tandis que la seconde est plus rapide."
+      ],
+      [
+        "provided that",
+        "à condition que",
+        "/prəˈvaɪdɪd ðæt/",
+        "You can join provided that you register today.",
+        "Tu peux participer à condition de t’inscrire aujourd’hui."
+      ]
+    ]
+  },
+  {
+    "id": "es-vocabulary-intermediate",
+    "language": "es",
+    "title": "Palabras para comunicarte mejor",
+    "category": "Vocabulary",
+    "level": "Intermediate",
+    "description": "Amplía tu vocabulario para conversaciones más naturales",
+    "accent": "mint",
+    "items": [
+      [
+        "aprovechar",
+        "profiter de",
+        "/a.pɾo.βeˈtʃaɾ/",
+        "Quiero aprovechar el fin de semana.",
+        "Je veux profiter du week-end."
+      ],
+      [
+        "darse cuenta",
+        "se rendre compte",
+        "/ˈdaɾ.se ˈkwen.ta/",
+        "Me di cuenta del error.",
+        "Je me suis rendu compte de l’erreur."
+      ],
+      [
+        "lograr",
+        "réussir à",
+        "/loˈɣɾaɾ/",
+        "Logramos terminar el proyecto.",
+        "Nous avons réussi à terminer le projet."
+      ],
+      [
+        "sin embargo",
+        "cependant",
+        "/sin emˈbaɾ.ɣo/",
+        "Estaba cansada; sin embargo, salió.",
+        "Elle était fatiguée ; cependant, elle est sortie."
+      ]
+    ]
+  },
+  {
+    "id": "es-travel-intermediate",
+    "language": "es",
+    "title": "Viajes sin contratiempos",
+    "category": "Travel",
+    "level": "Intermediate",
+    "description": "Resuelve cambios y situaciones habituales durante un viaje",
+    "accent": "peach",
+    "items": [
+      [
+        "el equipaje de mano",
+        "le bagage à main",
+        "/e.li.kiˈpa.xe ðe ˈma.no/",
+        "¿Puedo llevar este bolso como equipaje de mano?",
+        "Puis-je prendre ce sac comme bagage à main ?"
+      ],
+      [
+        "el transbordo",
+        "la correspondance",
+        "/tɾansˈβoɾ.ðo/",
+        "Tenemos un transbordo en Sevilla.",
+        "Nous avons une correspondance à Séville."
+      ],
+      [
+        "retrasado / retrasada",
+        "retardé(e)",
+        "/re.tɾaˈsa.ðo/",
+        "El vuelo está retrasado treinta minutos.",
+        "Le vol a trente minutes de retard."
+      ],
+      [
+        "el billete de ida y vuelta",
+        "le billet aller-retour",
+        "/biˈʝe.te ðe ˈi.ða i ˈβwel.ta/",
+        "Necesito un billete de ida y vuelta.",
+        "J’ai besoin d’un billet aller-retour."
+      ]
+    ]
+  },
+  {
+    "id": "es-grammar-intermediate",
+    "language": "es",
+    "title": "Gramática para conversar",
+    "category": "Grammar",
+    "level": "Intermediate",
+    "description": "Conecta ideas y habla de experiencias con más precisión",
+    "accent": "lilac",
+    "items": [
+      [
+        "aunque",
+        "bien que / même si",
+        "/ˈaun.ke/",
+        "Aunque llovía, fuimos al mercado.",
+        "Même s’il pleuvait, nous sommes allés au marché."
+      ],
+      [
+        "llevar + gerundio",
+        "faire quelque chose depuis",
+        "/ʝeˈβaɾ/",
+        "Llevo dos años estudiando español.",
+        "J’étudie l’espagnol depuis deux ans."
+      ],
+      [
+        "si tuviera…",
+        "si j’avais…",
+        "/si tuˈβje.ɾa/",
+        "Si tuviera tiempo, viajaría más.",
+        "Si j’avais le temps, je voyagerais davantage."
+      ],
+      [
+        "acabar de",
+        "venir de",
+        "/a.kaˈβaɾ ðe/",
+        "Acabo de llegar a casa.",
+        "Je viens d’arriver à la maison."
+      ]
+    ]
+  },
+  {
+    "id": "es-vocabulary-advanced",
+    "language": "es",
+    "title": "Expresión precisa",
+    "category": "Vocabulary",
+    "level": "Advanced",
+    "description": "Aprende vocabulario matizado para expresarte con precisión",
+    "accent": "mint",
+    "items": [
+      [
+        "plantear",
+        "soulever / proposer",
+        "/plan.teˈaɾ/",
+        "Quisiera plantear una pregunta.",
+        "Je voudrais soulever une question."
+      ],
+      [
+        "a pesar de",
+        "malgré",
+        "/a peˈsaɾ ðe/",
+        "A pesar del frío, salimos a caminar.",
+        "Malgré le froid, nous sommes sortis marcher."
+      ],
+      [
+        "el matiz",
+        "la nuance",
+        "/maˈtis/",
+        "Ese matiz cambia el sentido de la frase.",
+        "Cette nuance change le sens de la phrase."
+      ],
+      [
+        "llevar a cabo",
+        "mener à bien",
+        "/ʝeˈβaɾ a ˈka.βo/",
+        "El equipo llevó a cabo una investigación.",
+        "L’équipe a mené une recherche."
+      ]
+    ]
+  },
+  {
+    "id": "es-travel-advanced",
+    "language": "es",
+    "title": "Viajar de forma autónoma",
+    "category": "Travel",
+    "level": "Advanced",
+    "description": "Comprende trámites, reservas y solicitudes formales",
+    "accent": "peach",
+    "items": [
+      [
+        "el itinerario",
+        "l’itinéraire détaillé",
+        "/i.ti.neˈɾa.ɾjo/",
+        "Te enviaré el itinerario actualizado.",
+        "Je t’enverrai l’itinéraire mis à jour."
+      ],
+      [
+        "el alojamiento",
+        "l’hébergement",
+        "/a.lo.xaˈmjen.to/",
+        "Buscamos alojamiento cerca del centro.",
+        "Nous cherchons un hébergement près du centre."
+      ],
+      [
+        "la declaración de aduanas",
+        "la déclaration en douane",
+        "/de.kla.ɾaˈsjon ðe aˈðwa.nas/",
+        "Rellene la declaración de aduanas, por favor.",
+        "Veuillez remplir la déclaration en douane."
+      ],
+      [
+        "solicitar información",
+        "demander des renseignements",
+        "/so.li.siˈtaɾ in.foɾ.maˈsjon/",
+        "Quisiera solicitar información sobre la visita.",
+        "Je souhaiterais demander des renseignements sur la visite."
+      ]
+    ]
+  },
+  {
+    "id": "es-grammar-advanced",
+    "language": "es",
+    "title": "Estructuras avanzadas",
+    "category": "Grammar",
+    "level": "Advanced",
+    "description": "Practica estructuras complejas y cambios de orden en la frase",
+    "accent": "lilac",
+    "items": [
+      [
+        "si hubiera sabido…",
+        "si j’avais su…",
+        "/si uˈβje.ɾa saˈβi.ðo/",
+        "Si hubiera sabido la hora, habría llegado antes.",
+        "Si j’avais connu l’heure, je serais arrivé plus tôt."
+      ],
+      [
+        "no solo… sino también…",
+        "non seulement… mais aussi…",
+        "/no ˈso.lo/",
+        "No solo estudia, sino que también trabaja.",
+        "Elle ne fait pas qu’étudier, elle travaille aussi."
+      ],
+      [
+        "mientras que",
+        "tandis que",
+        "/mjen.tɾas ke/",
+        "Unos prefieren el tren, mientras que otros viajan en coche.",
+        "Certains préfèrent le train, tandis que d’autres voyagent en voiture."
+      ],
+      [
+        "con tal de que",
+        "à condition que",
+        "/kon ˈtal ðe ke/",
+        "Puedes venir con tal de que avises antes.",
+        "Tu peux venir à condition de prévenir avant."
+      ]
+    ]
+  }
+]
